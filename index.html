@@ -12,7 +12,7 @@
 
   <div class="container">
 
-    <img src="logo.png" alt="Logo Acme Bank" class="logo" />
+    <img src="assets/logo.png" alt="Logo Acme Bank" class="logo" />
 
     <form id="loginForm" class="form-login">
       <fieldset>
@@ -48,26 +48,19 @@
     <p id="mensajeError" class="mensaje-error"></p>
 
   </div>
-  <div id="ventanaError" class="ventana-error oculto">
-    <div class="barra-lateral"></div>
-    <div class="contenido">
-      <strong>Usuario o clave incorrecta</strong>
-      <p>Verifica la información e inténtalo de nuevo.</p>
+  <div id="ventanaError" class="oculto ventana-error">
+    <div class="contenido-error">
+      <span class="icono">⚠️</span>
+      <div>
+        <strong>Usuario o clave incorrecta</strong>
+        <p>Verifica la información e inténtalo de nuevo.</p>
+      </div>
+      <button onclick="cerrarVentana()" class="cerrar">✖</button>
     </div>
-    <span class="cerrar" onclick="cerrarVentana()">×</span>
-  </div>
-  <div id="ventanaError" class="ventana-error oculto">
-    <div class="barra-lateral"></div>
-    <div class="contenido">
-      <strong>Usuario o clave incorrecta</strong>
-      <p>Verifica la información e inténtalo de nuevo.</p>
-    </div>
-    <span class="cerrar" onclick="cerrarVentana()">×</span>
   </div>
 
 
-  <script src="js/index.js">
-  </script>
+<script type="module" src="js/index.js"></script>
 
 </body>
 

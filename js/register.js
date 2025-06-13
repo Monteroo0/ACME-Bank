@@ -1,10 +1,12 @@
+import { db } from './firebase-config.js';
+import { ref, set } from 'https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js';
+
 const form = document.getElementById('registroForm');
 const mensaje = document.getElementById('mensajeRegistro');
 
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  // Capturar datos del formulario
   const tipoId = document.getElementById('tipoId').value;
   const identificacion = document.getElementById('numeroIdentificacion').value;
   const nombres = document.getElementById('nombres').value;
@@ -16,19 +18,10 @@ form.addEventListener('submit', function (e) {
   const ciudad = document.getElementById('ciudad').value;
   const contrasena = document.getElementById('contrasena').value;
 
-  // Cargar usuarios actuales desde localStorage o crear objeto vacío
-  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || {};
-
-  // Verificar si ya existe
-  if (usuarios[identificacion]) {
-    mensaje.textContent = 'Este usuario ya está registrado.';
-    mensaje.style.color = 'orange';
-    return;
-  }
-
-  // Guardar nuevo usuario
-  usuarios[identificacion] = {
-    tipoIdentificacion: tipoId,
+  const clave = `${tipoId}_${identificacion}`;
+  const usuario = {
+    tipoId,
+    identificacion,
     nombres,
     apellidos,
     genero,
@@ -36,14 +29,22 @@ form.addEventListener('submit', function (e) {
     correo,
     direccion,
     ciudad,
-    contrasena
+    contrasena,
+    fechaCreacion: new Date().toLocaleDateString(),
+    saldo: 0,
+    numeroCuenta: `ACME${Math.floor(Math.random() * 1000000)}`
   };
 
-  localStorage.setItem('usuarios', JSON.stringify(usuarios));
-  mensaje.textContent = '¡Registro exitoso!';
-  mensaje.style.color = 'green';
-
-  setTimeout(() => {
-    window.location.href = 'index.html';
-  }, 1500);
+  try {
+    await set(ref(db, 'usuarios/' + clave), usuario);
+    mensaje.textContent = '¡Registro exitoso!';
+    mensaje.style.color = 'green';
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1500);
+  } catch (error) {
+    console.error('Error al registrar:', error);
+    mensaje.textContent = 'Error al registrar el usuario.';
+    mensaje.style.color = 'red';
+  }
 });

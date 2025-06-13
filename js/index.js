@@ -1,18 +1,18 @@
-const form = document.getElementById('loginForm');
-const mensajeError = document.getElementById('mensajeError');
+import { obtenerUsuario } from './usuarios.js';
 
-form.addEventListener('submit', function (e) {
+const form = document.getElementById('loginForm');
+
+form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     const tipo = document.getElementById('tipoIdentificacion').value;
     const numero = document.getElementById('numeroIdentificacion').value;
     const pass = document.getElementById('contrasena').value;
 
-    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || {};
-    const usuario = usuarios[numero];
+    const usuario = await obtenerUsuario(tipo, numero);
 
-    if (usuario && usuario.tipoIdentificacion === tipo && usuario.contrasena === pass) {
-        localStorage.setItem('usuarioActivo', numero);
+    if (usuario && usuario.contrasena === pass) {
+        localStorage.setItem('usuario', JSON.stringify(usuario));
         window.location.href = 'dashboard.html';
     } else {
         document.getElementById('ventanaError').classList.remove('oculto');
