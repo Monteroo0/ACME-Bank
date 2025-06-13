@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acme Bank - Inicio de Sesión</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="style/style.css" />
 </head>
+
 <body>
 
   <div class="container">
@@ -46,29 +48,27 @@
     <p id="mensajeError" class="mensaje-error"></p>
 
   </div>
+  <div id="ventanaError" class="ventana-error oculto">
+    <div class="barra-lateral"></div>
+    <div class="contenido">
+      <strong>Usuario o clave incorrecta</strong>
+      <p>Verifica la información e inténtalo de nuevo.</p>
+    </div>
+    <span class="cerrar" onclick="cerrarVentana()">×</span>
+  </div>
+  <div id="ventanaError" class="ventana-error oculto">
+    <div class="barra-lateral"></div>
+    <div class="contenido">
+      <strong>Usuario o clave incorrecta</strong>
+      <p>Verifica la información e inténtalo de nuevo.</p>
+    </div>
+    <span class="cerrar" onclick="cerrarVentana()">×</span>
+  </div>
 
-  <script>
-    const form = document.getElementById('loginForm');
-    const mensajeError = document.getElementById('mensajeError');
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const tipo = document.getElementById('tipoIdentificacion').value;
-      const numero = document.getElementById('numeroIdentificacion').value;
-      const pass = document.getElementById('contrasena').value;
-
-      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || {};
-      const usuario = usuarios[numero];
-
-      if (usuario && usuario.tipoIdentificacion === tipo && usuario.contrasena === pass) {
-        localStorage.setItem('usuarioActivo', numero);
-        window.location.href = 'dashboard.html';
-      } else {
-        mensajeError.textContent = 'Credenciales incorrectas. No se pudo validar su identidad.';
-      }
-    });
+  <script src="js/index.js">
   </script>
 
 </body>
+
 </html>
