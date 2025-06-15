@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Usuario - Acme Bank</title>
+  <link rel="stylesheet" href="style/dashboard.css" />
+  <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+<body>
+  <div class="sidebar">
+    <img src="assets/logo.png" alt="Acme Bank Logo">
+    <ul>
+      <li><button data-accion="consignar">Consignar</button></li>
+      <li><button data-accion="retirar">Retirar</button></li>
+      <li><button data-accion="pagar">Pagar servicios</button></li>
+      <li><button data-accion="extracto">Ver extracto</button></li>
+      <li><button data-accion="certificado">Generar certificado</button></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="bienvenidaUsuario">Bienvenido(a)</h1>
+      <button class="logout">Cerrar sesión</button>
+    </header>
+
+    <section class="dashboard">
+      <div class="saldo-section">
+        <h2>Saldo disponible</h2>
+        <p id="saldoUsuario">$0</p>
+      </div>
+
+      <div id="vistaDinamica"></div>
+    </section>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
