@@ -1,12 +1,23 @@
 window.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuario"));
 
+  // Set saldo y datos
+  document.getElementById("saldoCOP").textContent = usuario.saldo.toLocaleString("es-CO");
+  document.getElementById("saldoUSD").textContent = (usuario.saldo / 4200).toFixed(2);
+  document.getElementById("saldoEUR").textContent = (usuario.saldo / 4700).toFixed(2);
+
+  document.getElementById("nombreUsuario").textContent = usuario.nombres;
+  document.getElementById("ciudadUsuario").textContent = usuario.ciudad || "No registrada";
+  document.getElementById("cuentaUsuario").textContent = usuario.numeroCuenta;
+  document.getElementById("fechaCreacion").textContent = usuario.fechaCreacion;
+
   if (!usuario) {
     window.location.href = "index.html";
     return;
   }
 
-  const nombre = usuario.nombre || "Usuario";
+  const nombre = usuario.nombres || "Usuario";
+
   const bienvenidaEl = document.getElementById("bienvenidaUsuario");
   const saldoEl = document.getElementById("saldoUsuario");
   const vista = document.getElementById("vistaDinamica");
@@ -14,14 +25,15 @@ window.addEventListener("DOMContentLoaded", () => {
   bienvenidaEl.textContent = `Bienvenido(a), ${nombre}`;
   saldoEl.textContent = `$${usuario.saldo.toLocaleString("es-CO")}`;
 
- 
+
+
   const btnCerrar = document.querySelector(".logout");
   btnCerrar.addEventListener("click", () => {
     localStorage.removeItem("usuario");
     window.location.href = "index.html";
   });
 
-  
+
   document.querySelectorAll("[data-accion]").forEach(btn => {
     btn.addEventListener("click", () => {
       const accion = btn.dataset.accion;

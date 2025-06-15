@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel de Usuario - Acme Bank</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acme Bank: Resumen</title>
   <link rel="stylesheet" href="style/dashboard.css" />
   <link rel="icon" type="image/png" href="assets/iconoecma.png" />
 </head>
+
 <body>
   <div class="sidebar">
     <img src="assets/logo.png" alt="Acme Bank Logo">
     <ul>
-      <li><button data-accion="consignar">Consignar</button></li>
-      <li><button data-accion="retirar">Retirar</button></li>
-      <li><button data-accion="pagar">Pagar servicios</button></li>
-      <li><button data-accion="extracto">Ver extracto</button></li>
-      <li><button data-accion="certificado">Generar certificado</button></li>
+      <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+      <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+      <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+      <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+      <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+      <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
     </ul>
   </div>
 
@@ -26,15 +29,24 @@
     </header>
 
     <section class="dashboard">
-      <div class="saldo-section">
-        <h2>Saldo disponible</h2>
-        <p id="saldoUsuario">$0</p>
+      <div class="tarjeta-saldo">
+        <div class="columna-izquierda">
+          <h3>Saldo de Acme Bank</h3>
+          <p class="saldo-cop">$ <span id="saldoCOP">0</span></p>
+          <p class="etiqueta">Total estimado de todas las divisas</p>
+          <p class="divisas">US$ <span id="saldoUSD">0.00</span> – € <span id="saldoEUR">0.00</span></p>
+        </div>
+        <div class="columna-derecha">
+          <p><strong>Nombre:</strong> <span id="nombreUsuario">–</span></p>
+          <p><strong>Ciudad:</strong> <span id="ciudadUsuario">–</span></p>
+          <p><strong>Número de cuenta:</strong> <span id="cuentaUsuario">–</span></p>
+          <p><strong>Fecha de creación:</strong> <span id="fechaCreacion">–</span></p>
+        </div>
       </div>
-
-      <div id="vistaDinamica"></div>
     </section>
   </div>
 
   <script type="module" src="js/dashboard.js"></script>
 </body>
+
 </html>
