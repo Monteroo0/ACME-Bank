@@ -1,7 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
   const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-  // Set saldo y datos
   document.getElementById("saldoCOP").textContent = usuario.saldo.toLocaleString("es-CO");
   document.getElementById("saldoUSD").textContent = (usuario.saldo / 4200).toFixed(2);
   document.getElementById("saldoEUR").textContent = (usuario.saldo / 4700).toFixed(2);

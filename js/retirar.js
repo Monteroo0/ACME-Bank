@@ -2,15 +2,15 @@ import { ref, onValue, push } from "https://www.gstatic.com/firebasejs/11.9.1/fi
 import { db } from "./firebase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const cuentaDestinoInput = document.getElementById("cuentaDestino");
-  const sugerenciasDiv = document.getElementById("sugerencias");
-  const nombreDestinoInput = document.getElementById("nombreDestino");
-  const montoInput = document.getElementById("monto");
-  const btnConsignar = document.getElementById("btnConsignar");
+  const cuentaOrigenInput = document.getElementById("cuentaOrigen");
+  const sugerenciasDiv = document.getElementById("sugerenciasRetiro");
+  const nombreOrigenInput = document.getElementById("nombreOrigen");
+  const montoInput = document.getElementById("montoRetiro");
+  const btnRetirar = document.getElementById("btnRetirar");
 
   
-  cuentaDestinoInput.addEventListener("input", () => {
-    const valor = cuentaDestinoInput.value.trim().toUpperCase();
+  cuentaOrigenInput.addEventListener("input", () => {
+    const valor = cuentaOrigenInput.value.trim().toUpperCase();
 
     if (valor.length < 3) {
       sugerenciasDiv.innerHTML = "";
@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
         div.addEventListener("click", () => {
-          cuentaDestinoInput.value = user.numeroCuenta;
-          nombreDestinoInput.value = `${user.nombres} ${user.apellidos}`;
+          cuentaOrigenInput.value = user.numeroCuenta;
+          nombreOrigenInput.value = `${user.nombres} ${user.apellidos}`;
           sugerenciasDiv.style.display = "none";
         });
 
@@ -57,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   
-  btnConsignar.addEventListener("click", () => {
-    const cuenta = cuentaDestinoInput.value.trim();
-    const nombre = nombreDestinoInput.value.trim();
+  btnRetirar.addEventListener("click", () => {
+    const cuenta = cuentaOrigenInput.value.trim();
+    const nombre = nombreOrigenInput.value.trim();
     const monto = parseFloat(montoInput.value.trim());
 
     if (!cuenta || !nombre || isNaN(monto) || monto <= 0) {
@@ -69,19 +69,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const transRef = ref(db, "transacciones");
     push(transRef, {
-      tipo: "consignación",
-      cuentaDestino: cuenta,
-      nombreDestino: nombre,
+      tipo: "retiro",
+      cuentaOrigen: cuenta,
+      nombreOrigen: nombre,
       monto: monto,
       fecha: new Date().toISOString()
     }).then(() => {
-      alert("Consignación exitosa");
-      cuentaDestinoInput.value = "";
-      nombreDestinoInput.value = "";
+      alert("Retiro registrado con éxito");
+      cuentaOrigenInput.value = "";
+      nombreOrigenInput.value = "";
       montoInput.value = "";
     }).catch((error) => {
       console.error(error);
-      alert("Error al registrar la transacción");
+      alert("Error al registrar el retiro");
     });
   });
 });
