@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consignación Electrónica</title>
+    <link rel="stylesheet" href="style/consignar.css" />
+    <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <img src="assets/logo.png" alt="Acme Bank Logo">
+        <ul>
+            <li><a class="boton-nav" href="dashboard.html">Inicio</a></li>
+            <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+            <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+            <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+            <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+            <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+            <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <header>
+            <h1 id="bienvenidaUsuario">Bienvenido(a)</h1>
+            <button class="logout" id="btnCerrarSesion">Cerrar sesión</button>
+        </header>
+
+        <section class="dashboard">
+            <div class="breadcrumb">Inicio > Consignación electrónica</div>
+
+            <div class="form-box">
+                <h3>Consignación a otra cuenta</h3>
+                <form id="formConsignacion">
+                    <label for="cuentaDestino">Número de cuenta destino:</label>
+                    <div style="position: relative;">
+                        <input type="text" id="cuentaDestino" autocomplete="off" required />
+                        <div id="sugerencias" class="sugerencias"></div>
+                    </div>
+
+                    <label for="nombreDestino">Nombre del destinatario:</label>
+                    <input type="text" id="nombreDestino" readonly />
+
+                    <label for="valor">Monto a transferir:</label>
+                    <input type="number" id="valor" min="1" required />
+
+                    <button type="submit" class="boton-principal">Transferir</button>
+                </form>
+                <div id="resumen" style="display:none; margin-top:20px;"></div>
+            </div>
+        </section>
+    </div>
+
+    <script type="module" src="js/consignar.js"></script>
+</body>
+
+</html>
