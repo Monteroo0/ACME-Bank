@@ -123,8 +123,21 @@ document.addEventListener("DOMContentLoaded", () => {
         tipo: "consignación",
         concepto: "Consignación por canal electrónico",
         monto,
-        fecha: fechaFormateada
+        fecha: fechaFormateada,
+        destinatario: nombre, // 👈 aquí agregamos el nombre completo del destinatario
+        cuentaDestino: cuenta  // 👈 opcional: también puedes guardar el número de cuenta
       });
+
+      await push(ref(db, `transacciones/${claveDestino}`), {
+        referencia,
+        tipo: "recibido",
+        monto,
+        fecha: fechaFormateada,
+        remitente: `${usuario.nombres} ${usuario.apellidos}`,
+        cuentaOrigen: usuario.numeroCuenta
+      });
+
+
 
       const resumen = document.createElement("div");
       resumen.classList.add("resumen-transaccion");

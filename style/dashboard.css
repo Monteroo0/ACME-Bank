@@ -177,3 +177,36 @@
   cursor: pointer;
   width: fit-content;
 }
+
+.ultimas-transacciones {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.ultimas-transacciones h2 {
+  margin-bottom: 0.5rem;
+}
+
+.ultimas-transacciones .descripcion {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+#listaTransacciones {
+  list-style: none;
+  padding: 0;
+}
+
+#listaTransacciones li {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#listaTransacciones li:hover {
+  background-color: #f2f2f2;
+}
