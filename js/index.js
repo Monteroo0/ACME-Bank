@@ -12,7 +12,13 @@ form.addEventListener('submit', async function (e) {
     const usuario = await obtenerUsuario(tipo, numero);
 
     if (usuario && usuario.contrasena === pass) {
-        localStorage.setItem('usuario', JSON.stringify(usuario));
+        const clave = `${tipo}_${numero}`;
+
+        localStorage.setItem('usuario', JSON.stringify({
+            ...usuario,
+            clave
+        }));
+
         window.location.href = 'dashboard.html';
     } else {
         document.getElementById('ventanaError').classList.remove('oculto');
