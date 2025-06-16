@@ -1,14 +1,32 @@
-import { ref, onValue } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+import { ref, onValue, update, push, get } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 import { db } from "./firebase-config.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const cuentaDestinoInput = document.getElementById("cuentaDestino");
   const sugerenciasDiv = document.getElementById("sugerencias");
   const nombreDestinoInput = document.getElementById("nombreDestino");
+  const montoInput = document.getElementById("valor");
+  const btnConsignar = document.querySelector("button[type='submit']");
+  const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  if (!usuario) {
+    alert("No has iniciado sesión. Redirigiendo al login.");
+    window.location.href = "index.html";
+  }
+
+  if (usuario?.nombres) {
+    const bienvenida = document.getElementById("bienvenidaUsuario");
+    if (bienvenida) bienvenida.textContent = `Bienvenido(a), ${usuario.nombres}`;
+  }
+
+  btnCerrarSesion?.addEventListener("click", () => {
+    localStorage.removeItem("usuario");
+    window.location.href = "index.html";
+  });
 
   cuentaDestinoInput.addEventListener("input", () => {
     const valor = cuentaDestinoInput.value.trim().toUpperCase();
-
     if (valor.length < 3) {
       sugerenciasDiv.innerHTML = "";
       sugerenciasDiv.style.display = "none";
@@ -32,24 +50,105 @@ document.addEventListener("DOMContentLoaded", () => {
       sugerencias.forEach(user => {
         const div = document.createElement("div");
         div.classList.add("sugerencia-item");
-
-        div.innerHTML = `
-          <strong>${user.nombres} ${user.apellidos}ㅤ</strong><br><br>
-          <span style="color: gray;">${user.numeroCuenta}</span>
-        `;
-
+        div.innerHTML = `<strong>${user.nombres} ${user.apellidos}</strong><br><span style="color: gray;">${user.numeroCuenta}</span>`;
         div.addEventListener("click", () => {
           cuentaDestinoInput.value = user.numeroCuenta;
           nombreDestinoInput.value = `${user.nombres} ${user.apellidos}`;
           sugerenciasDiv.style.display = "none";
         });
-
         sugerenciasDiv.appendChild(div);
       });
-
       sugerenciasDiv.style.display = "block";
-    }, {
-      onlyOnce: true
-    });
+    }, { onlyOnce: true });
+  });
+
+  btnConsignar.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const cuenta = cuentaDestinoInput.value.trim();
+    const nombre = nombreDestinoInput.value.trim();
+    const monto = parseFloat(montoInput.value.trim());
+
+    if (!cuenta || !nombre || isNaN(monto) || monto <= 0) {
+      alert("Completa todos los campos correctamente.");
+      return;
+    }
+
+    try {
+      const snapshot = await get(ref(db, "usuarios"));
+      const data = snapshot.val();
+      let claveDestino = null;
+      let usuarioDestino = null;
+
+      for (const clave in data) {
+        if (data[clave].numeroCuenta === cuenta) {
+          claveDestino = clave;
+          usuarioDestino = data[clave];
+          break;
+        }
+      }
+
+      if (!claveDestino) {
+        alert("Cuenta de destino no encontrada.");
+        return;
+      }
+
+      if ((usuario.saldo || 0) < monto) {
+        alert("Saldo insuficiente.");
+        return;
+      }
+
+      const nuevoSaldoDestino = (usuarioDestino.saldo || 0) + monto;
+      await update(ref(db, `usuarios/${claveDestino}`), { saldo: nuevoSaldoDestino });
+
+      const nuevoSaldoRemitente = (usuario.saldo || 0) - monto;
+      await update(ref(db, `usuarios/${usuario.clave}`), { saldo: nuevoSaldoRemitente });
+
+      usuario.saldo = nuevoSaldoRemitente;
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+
+      const referencia = crypto.randomUUID();
+      const fechaFormateada = new Date().toLocaleString("es-CO", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      });
+
+      await push(ref(db, `transacciones/${usuario.clave}`), {
+        referencia,
+        tipo: "consignación",
+        concepto: "Consignación por canal electrónico",
+        monto,
+        fecha: fechaFormateada
+      });
+
+      const resumen = document.createElement("div");
+      resumen.classList.add("resumen-transaccion");
+      resumen.innerHTML = `
+        <button class="cerrar-resumen">✖</button>
+        <h3>Recibo de Consignación</h3>
+        <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+        <p><strong>Referencia:</strong> ${referencia}</p>
+        <p><strong>Tipo:</strong> Consignación</p>
+        <p><strong>Concepto:</strong> Consignación por canal electrónico</p>
+        <p><strong>Valor:</strong> $${monto.toLocaleString("es-CO")}</p>
+        <button onclick="window.print()">Imprimir</button>
+      `;
+      document.body.appendChild(resumen);
+      resumen.querySelector(".cerrar-resumen").addEventListener("click", () => resumen.remove());
+
+      alert(`Consignación de $${monto.toLocaleString("es-CO")} realizada exitosamente`);
+      cuentaDestinoInput.value = "";
+      nombreDestinoInput.value = "";
+      montoInput.value = "";
+
+    } catch (error) {
+      console.error("Error detallado al consignar:", error.message, error);
+      alert("Error al realizar la consignación: " + error.message);
+    }
   });
 });
