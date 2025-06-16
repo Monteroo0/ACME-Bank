@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acme Bank: Movimientos</title>
+  <link rel="stylesheet" href="style/dashboard.css" />
+  <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+
+<body>
+  <div class="sidebar">
+    <img src="assets/logo.png" alt="Acme Bank Logo" />
+    <ul>
+      <li><a class="boton-nav" href="dashboard.html">Inicio</a></li>
+      <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+      <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+      <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+      <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+      <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+      <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="bienvenidaUsuario">Movimientos</h1>
+      <button class="logout" id="btnCerrarSesion">Cerrar sesión</button>
+    </header>
+
+    <section class="movimientos">
+      <ul id="listaMovimientos"></ul>
+    </section>
+  </div>
+
+  <script type="module" src="js/movimientos.js"></script>
+</body>
+
+</html>

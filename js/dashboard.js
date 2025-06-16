@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (transacciones) {
       const transList = Object.values(transacciones)
-        .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
         .slice(0, 10);
 
       const lista = document.getElementById("listaTransacciones");

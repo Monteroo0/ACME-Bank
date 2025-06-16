@@ -108,7 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("usuario", JSON.stringify(usuario));
 
       const referencia = crypto.randomUUID();
-      const fechaFormateada = new Date().toLocaleString("es-CO", {
+      const ahora = new Date();
+      const fechaFormateada = ahora.toLocaleString("es-CO", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -117,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         second: "2-digit",
         hour12: true
       });
+      const timestamp = ahora.getTime();
 
       await push(ref(db, `transacciones/${usuario.clave}`), {
         referencia,
@@ -124,8 +126,9 @@ document.addEventListener("DOMContentLoaded", () => {
         concepto: "Consignación por canal electrónico",
         monto,
         fecha: fechaFormateada,
-        destinatario: nombre, // 👈 aquí agregamos el nombre completo del destinatario
-        cuentaDestino: cuenta  // 👈 opcional: también puedes guardar el número de cuenta
+        timestamp,
+        destinatario: nombre,
+        cuentaDestino: cuenta
       });
 
       await push(ref(db, `transacciones/${claveDestino}`), {
@@ -133,12 +136,11 @@ document.addEventListener("DOMContentLoaded", () => {
         tipo: "recibido",
         monto,
         fecha: fechaFormateada,
+        timestamp,
         remitente: `${usuario.nombres} ${usuario.apellidos}`,
         cuentaOrigen: usuario.numeroCuenta
       });
-
-
-
+      
       const resumen = document.createElement("div");
       resumen.classList.add("resumen-transaccion");
       resumen.innerHTML = `
