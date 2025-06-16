@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.appendChild(resumen);
       resumen.querySelector(".cerrar-resumen").addEventListener("click", () => resumen.remove());
 
-      alert(`Consignación de $${monto.toLocaleString("es-CO")} realizada exitosamente`);
+      alert(`Consignación de $${monto.toLocaleString("es-CO")} realizada exitosamente ✅`);
       cuentaDestinoInput.value = "";
       nombreDestinoInput.value = "";
       montoInput.value = "";

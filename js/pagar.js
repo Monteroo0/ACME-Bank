@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const transacciones = Object.values(data)
       .map(tx => {
         let fechaReal = null;
-
         if (tx.timestamp) {
           fechaReal = new Date(tx.timestamp);
         } else if (tx.fecha) {
@@ -48,7 +47,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           const [dia, mes, anio] = fechaStr.split("/").map(Number);
           fechaReal = new Date(`${anio}-${mes}-${dia}T${horaStr.replace(" a. m.", "AM").replace(" p. m.", "PM")}`);
         }
-
         return fechaReal ? { ...tx, fechaObj: fechaReal } : null;
       })
       .filter(tx => tx !== null)
@@ -71,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       let montoTexto = `$${tx.monto.toLocaleString("es-CO")}`;
       let color = "black";
 
-      if (["consignación", "envío", "retiro", "pago"].includes(tx.tipo.toLowerCase())) {
+      if (["consignación", "envío", "pago", "retiro"].includes(tx.tipo.toLowerCase())) {
         montoTexto = `- $${tx.monto.toLocaleString("es-CO")}`;
         color = "red";
       } else if (tx.tipo.toLowerCase() === "recibido") {
@@ -119,7 +117,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       lista.appendChild(li);
     });
-
   } catch (err) {
     console.error("Error cargando movimientos:", err);
   }

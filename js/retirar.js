@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnRetirar = document.querySelector("button[type='submit']");
   const btnCerrarSesion = document.getElementById("btnCerrarSesion");
 
-  // Obtener usuario de sesión
   const usuario = JSON.parse(localStorage.getItem("usuario"));
   if (!usuario) {
     alert("No has iniciado sesión. Redirigiendo al login.");
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Mostrar datos del usuario logueado
   if (usuario.nombres && usuario.apellidos && usuario.numeroCuenta) {
     const bienvenida = document.getElementById("bienvenidaUsuario");
     if (bienvenida) {
@@ -34,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "index.html";
   });
 
-  // Procesar retiro
   btnRetirar.addEventListener("click", async (e) => {
     e.preventDefault();
 
@@ -80,8 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
         tipo: "retiro",
         concepto: "Retiro por canal electrónico",
         monto,
-        fecha: fechaFormateada
+        fecha: fechaFormateada,
+        timestamp: Date.now()
       });
+
 
       const resumen = document.createElement("div");
       resumen.classList.add("resumen-transaccion");
@@ -98,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.appendChild(resumen);
       resumen.querySelector(".cerrar-resumen").addEventListener("click", () => resumen.remove());
 
-      alert(`Retiro de $${monto.toLocaleString("es-CO")} realizado exitosamente`);
+      alert(`Retiro de $${monto.toLocaleString("es-CO")} realizado exitosamente ✅`);
       montoInput.value = "";
 
     } catch (error) {
