@@ -312,3 +312,44 @@ header {
   float: right;
   cursor: pointer;
 }
+/* Ocultar menú lateral en móviles */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+/* Mostrar barra de botones solo en móviles */
+@media (max-width: 768px) {
+    .mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #ffffff00; /* transparente porque los botones tienen su fondo */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+        z-index: 999; /* por encima de todo */
+    }
+
+    .mobile-nav .boton-nav {
+        background-color: #c40000;
+        color: white;
+        font-weight: bold;
+        border-radius: 20px;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        flex: 0 0 calc(33.33% - 20px); /* 3 botones por fila aprox */
+    }
+}
+
+/* Ocultar barra de botones en escritorio */
+@media (min-width: 769px) {
+    .mobile-nav {
+        display: none;
+    }
+}
