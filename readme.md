@@ -97,3 +97,7 @@ El sistema se basa en una interfaz web responsive, compatible con dispositivos m
 - La persistencia de datos se maneja con `localStorage` en formato JSON.
 - El número de referencia de transacciones se genera aleatoriamente.
 - Todo el flujo de navegación y estados se controla desde el lado del cliente.
+
+## Maquetación
+
+https://www.figma.com/design/QOEij77RW6WufaGsiVaCWF/Maquetaci%C3%B3n-ACME-Bank?node-id=0-1&t=5LPjdI5ZHer7jKGu-1
