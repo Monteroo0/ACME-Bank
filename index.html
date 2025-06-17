@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inicie sesión en su cuenta ACME Bank</title>
+  <link rel="stylesheet" href="style/style.css" />
+  <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+
+<body>
+
+  <div class="container">
+
+    <img src="assets/logo.png" alt="Logo Acme Bank" class="logo" />
+
+    <form id="loginForm" class="form-login">
+      <fieldset>
+        <legend>Iniciar Sesión</legend>
+
+        <label for="tipoIdentificacion">Tipo de Identificación:</label>
+        <select id="tipoIdentificacion" name="tipoIdentificacion" required>
+          <option value="">Seleccione</option>
+          <option value="CC">Cédula de Ciudadanía</option>
+          <option value="CE">Cédula de Extranjería</option>
+          <option value="TI">Tarjeta de Identidad</option>
+          <option value="NIT">NIT</option>
+        </select>
+
+        <label for="numeroIdentificacion">Número de Identificación:</label>
+        <input type="text" id="numeroIdentificacion" name="numeroIdentificacion" required />
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="contrasena" required />
+
+        <a href="recover.html" class="link-recover">¿Olvidaste tu contraseña?</a>
+
+        <button type="submit" class="btn-primary">Iniciar Sesión</button>
+      </fieldset>
+    </form>
+
+    <div class="separator">O</div>
+
+    <form action="register.html">
+      <button type="submit" class="btn-secondary">Registrarse</button>
+    </form>
+
+    <p id="mensajeError" class="mensaje-error"></p>
+
+  </div>
+  <div id="ventanaError" class="oculto ventana-error">
+    <div class="contenido-error">
+      <span class="icono">⚠️</span>
+      <div>
+        <strong>Usuario o clave incorrecta</strong>
+        <p>Verifica la información e inténtalo de nuevo.</p>
+      </div>
+      <button onclick="cerrarVentana()" class="cerrar">✖</button>
+    </div>
+  </div>
+
+
+<script type="module" src="js/index.js"></script>
+
+</body>
+
+</html>

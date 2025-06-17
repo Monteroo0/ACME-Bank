@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acme Bank: Resumen</title>
+  <link rel="stylesheet" href="style/dashboard.css" />
+  <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+
+<body>
+  <div class="sidebar">
+    <img src="assets/logo.png" alt="Acme Bank Logo">
+    <ul>
+      <li><a class="boton-nav" href="dashboard.html">Inicio</a></li>
+      <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+      <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+      <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+      <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+      <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+      <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="bienvenidaUsuario">Bienvenido(a)</h1>
+      <button class="logout" id="btnCerrarSesion">Cerrar sesión</button>
+    </header>
+
+    <section class="dashboard">
+      <div class="tarjeta-saldo">
+        <div class="columna-izquierda">
+          <h3>Saldo de Acme Bank</h3>
+          <p class="saldo-cop">$ <span id="saldoCOP">0</span></p>
+          <p class="etiqueta">Total estimado de todas las divisas</p>
+          <p class="divisas">US$ <span id="saldoUSD">0.00</span> – € <span id="saldoEUR">0.00</span></p>
+        </div>
+        <div class="columna-derecha">
+          <p><strong>Nombre:</strong> <span id="nombreUsuario">–</span></p>
+          <p><strong>Ciudad:</strong> <span id="ciudadUsuario">–</span></p>
+          <p><strong>Número de cuenta:</strong> <span id="cuentaUsuario">–</span></p>
+          <p><strong>Fecha de creación:</strong> <span id="fechaCreacion">–</span></p>
+        </div>
+      </div>
+
+      <div class="ultimas-transacciones">
+        <h2>Últimas transacciones</h2>
+        <ul id="listaTransacciones"></ul>
+      </div>
+
+    </section>
+  </div>
+  <!-- Botones para móvil -->
+  <div class="mobile-nav">
+    <a class="boton-nav" href="dashboard.html">Inicio</a>
+    <a class="boton-nav" href="movimientos.html">Movimientos</a>
+    <a class="boton-nav" href="consignar.html">Consignar</a>
+    <a class="boton-nav" href="retirar.html">Retirar</a>
+    <a class="boton-nav" href="pagar.html">Pagar servicios</a>
+    <a class="boton-nav" href="extracto.html">Ver extracto</a>
+    <a class="boton-nav" href="certificado.html">Generar certificado</a>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>

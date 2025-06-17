@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Extracto Bancario</title>
+  <link rel="stylesheet" href="style/consignar.css" />
+  <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+
+<body>
+  <div class="sidebar">
+    <img src="assets/logo.png" alt="Acme Bank Logo">
+    <ul>
+      <li><a class="boton-nav" href="dashboard.html">Inicio</a></li>
+      <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+      <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+      <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+      <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+      <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+      <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="bienvenidaUsuario">Bienvenido(a)</h1>
+      <button class="logout" id="btnCerrarSesion">Cerrar sesión</button>
+    </header>
+
+    <section class="dashboard">
+      <div class="breadcrumb">Inicio > Ver extracto</div>
+
+      <div class="form-box">
+        <h3>Generar Extracto Bancario</h3>
+
+        <label>Número de cuenta:</label>
+        <input type="text" id="cuentaUsuario" readonly />
+
+        <label>Nombre completo:</label>
+        <input type="text" id="nombreUsuario" readonly />
+
+        <label>Año:</label>
+        <input type="number" id="anio" min="2000" max="2100" required />
+
+        <label>Mes:</label>
+        <select id="mes" required>
+          <option value="">Selecciona un mes</option>
+          <option value="01">Enero</option>
+          <option value="02">Febrero</option>
+          <option value="03">Marzo</option>
+          <option value="04">Abril</option>
+          <option value="05">Mayo</option>
+          <option value="06">Junio</option>
+          <option value="07">Julio</option>
+          <option value="08">Agosto</option>
+          <option value="09">Septiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+        </select>
+
+        <button id="btnGenerar" class="boton-principal">Generar Extracto</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Botones para móvil -->
+  <div class="mobile-nav">
+    <a class="boton-nav" href="dashboard.html">Inicio</a>
+    <a class="boton-nav" href="movimientos.html">Movimientos</a>
+    <a class="boton-nav" href="consignar.html">Consignar</a>
+    <a class="boton-nav" href="retirar.html">Retirar</a>
+    <a class="boton-nav" href="pagar.html">Pagar servicios</a>
+    <a class="boton-nav" href="extracto.html">Ver extracto</a>
+    <a class="boton-nav" href="certificado.html">Generar certificado</a>
+  </div>
+
+
+  <script type="module" src="js/extracto.js"></script>
+</body>
+
+</html>

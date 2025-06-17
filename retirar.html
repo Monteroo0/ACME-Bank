@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retiro Electrónico</title>
+  <link rel="stylesheet" href="style/consignar.css" />
+  <link rel="icon" type="image/png" href="assets/iconoecma.png" />
+</head>
+
+<body>
+  <div class="sidebar">
+    <img src="assets/logo.png" alt="Acme Bank Logo">
+    <ul>
+      <li><a class="boton-nav" href="dashboard.html">Inicio</a></li>
+      <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+      <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+      <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+      <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+      <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+      <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="bienvenidaUsuario">Bienvenido(a)</h1>
+      <button class="logout" id="btnCerrarSesion">Cerrar sesión</button>
+    </header>
+
+    <section class="dashboard">
+      <div class="breadcrumb">Inicio > Retiro</div>
+
+      <div class="form-box">
+        <h3>Retiro de fondos</h3>
+        <form id="formRetiro">
+          <label for="cuentaDestino">Número de cuenta:</label>
+          <input type="text" id="cuentaDestino" readonly />
+
+          <label for="nombreDestino">Nombre completo:</label>
+          <input type="text" id="nombreDestino" readonly />
+
+          <label for="valor">Valor a retirar:</label>
+          <input type="number" id="valor" required />
+
+          <button type="submit">Retirar</button>
+
+        </form>
+      </div>
+    </section>
+  </div>
+  <!-- Botones para móvil -->
+  <div class="mobile-nav">
+    <a class="boton-nav" href="dashboard.html">Inicio</a>
+    <a class="boton-nav" href="movimientos.html">Movimientos</a>
+    <a class="boton-nav" href="consignar.html">Consignar</a>
+    <a class="boton-nav" href="retirar.html">Retirar</a>
+    <a class="boton-nav" href="pagar.html">Pagar servicios</a>
+    <a class="boton-nav" href="extracto.html">Ver extracto</a>
+    <a class="boton-nav" href="certificado.html">Generar certificado</a>
+  </div>
+
+  <script type="module" src="js/retirar.js"></script>
+</body>
+
+</html>

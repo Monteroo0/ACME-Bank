@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificado Bancario</title>
+  <link rel="stylesheet" href="style/consignar.css"/>
+  <link rel="icon" type="image/png" href="assets/iconoecma.png"/>
+</head>
+<body>
+  <div class="sidebar">
+    <img src="assets/logo.png" alt="Acme Bank Logo">
+    <ul>
+      <li><a class="boton-nav" href="dashboard.html">Inicio</a></li>
+      <li><a class="boton-nav" href="movimientos.html">Movimientos</a></li>
+      <li><a class="boton-nav" href="consignar.html">Consignar</a></li>
+      <li><a class="boton-nav" href="retirar.html">Retirar</a></li>
+      <li><a class="boton-nav" href="pagar.html">Pagar servicios</a></li>
+      <li><a class="boton-nav" href="extracto.html">Ver extracto</a></li>
+      <li><a class="boton-nav" href="certificado.html">Generar certificado</a></li>
+    </ul>
+  </div>
+
+  <div class="main">
+    <header>
+      <h1 id="bienvenidaUsuario">Bienvenido(a)</h1>
+      <button class="logout" id="btnCerrarSesion">Cerrar sesión</button>
+    </header>
+
+    <section class="dashboard">
+      <div class="breadcrumb">Inicio > Certificado Bancario</div>
+
+      <div class="form-box">
+        <h3>Certificado Bancario</h3>
+
+        <div id="contenidoCertificado" style="margin-top: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background: white;">
+          <h2 style="text-align: center;">ACME BANK</h2>
+          <p style="text-align: center;">Certificado Bancario</p>
+          <p>El presente documento certifica que el/la usuario/a <strong id="nombreCertificado"></strong>, identificado/a con número de cuenta <strong id="cuentaCertificado"></strong>, posee una cuenta activa en ACME BANK.</p>
+          <p>Fecha de creación de la cuenta: <strong id="fechaCertificado"></strong></p>
+          <p>Este certificado es emitido a solicitud del usuario para los fines que estime convenientes.</p>
+          <p style="margin-top: 30px;">Atentamente,</p>
+          <p><strong>ACME BANK</strong></p>
+        </div>
+
+        <button class="boton-principal" style="margin-top: 20px;" id="btnImprimirCertificado">Imprimir certificado</button>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="js/certificado.js"></script>
+</body>
+</html>
