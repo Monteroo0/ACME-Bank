@@ -1,8 +1,7 @@
+import { ref, get, set, update, push } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 import { db } from "./firebase-config.js";
-import { ref, push, get } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Verifica si el usuario está autenticado
+document.addEventListener("DOMContentLoaded", async () => {
   const usuario = JSON.parse(localStorage.getItem("usuario"));
   if (!usuario) {
     alert("Debes iniciar sesión");
@@ -10,13 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Actualiza la interfaz con los datos del usuario
   document.getElementById("bienvenidaUsuario").textContent = `Bienvenido(a), ${usuario.nombres}`;
-  document.getElementById("numeroCuenta").textContent = usuario.clave;
   document.getElementById("nombreUsuario").textContent = `${usuario.nombres} ${usuario.apellidos}`;
+  document.getElementById("numeroCuenta").textContent = usuario.numeroCuenta;
 
-  // Cierra sesión al hacer clic en el botón correspondiente
-  document.getElementById("btnCerrarSesion")?.addEventListener("click", () => {
+  // Cierre de sesión
+  document.getElementById("btnCerrarSesion").addEventListener("click", () => {
     localStorage.removeItem("usuario");
     location.href = "index.html";
   });
@@ -25,63 +23,80 @@ document.addEventListener("DOMContentLoaded", () => {
   const resumenDiv = document.getElementById("resumenPago");
   const btnImprimir = document.getElementById("btnImprimir");
 
-  // Procesa el pago de un servicio al enviar el formulario
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const servicio = document.getElementById("servicio").value;
-    const referencia = document.getElementById("referencia").value;
+    const referencia = document.getElementById("referencia").value.trim();
     const valor = parseInt(document.getElementById("valor").value);
 
-    // Formatea la fecha actual para registrar la transacción
-    const fecha = new Date();
-    const opcionesFecha = {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    };
-    const opcionesHora = {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-    const fechaStr = fecha.toLocaleDateString("es-CO", opcionesFecha);
-    const horaStr = fecha.toLocaleTimeString("es-CO", opcionesHora);
-    const fechaCompleta = `${fechaStr}, ${horaStr}`;
-
-    // Crea el objeto de la transacción
-    const nuevaTransaccion = {
-      tipo: "pago",
-      concepto: `Pago de ${servicio}`,
-      referencia: referencia,
-      monto: valor,
-      fecha: fechaCompleta,
-      timestamp: fecha.getTime()
-    };
+    if (!servicio || !referencia || valor <= 0) {
+      alert("Todos los campos son obligatorios y deben ser válidos.");
+      return;
+    }
 
     try {
-      // Registra la transacción en Firebase
-      await push(ref(db, `transacciones/${usuario.clave}`), nuevaTransaccion);
+      // Obtiene datos actualizados del usuario desde Firebase
+      const userRef = ref(db, `usuarios/${usuario.clave}`);
+      const snapshot = await get(userRef);
 
-      // Muestra un resumen del pago en la interfaz
+      if (!snapshot.exists()) {
+        alert("Usuario no encontrado en la base de datos.");
+        return;
+      }
+
+      const datosActualizados = snapshot.val();
+      const saldoActual = parseInt(datosActualizados.saldo || 0);
+
+      if (valor > saldoActual) {
+        alert("Saldo insuficiente para realizar el pago.");
+        return;
+      }
+
+      // Calcula nuevo saldo
+      const nuevoSaldo = saldoActual - valor;
+
+      // Actualiza saldo en Firebase
+      await update(userRef, { saldo: nuevoSaldo });
+
+      // Guarda la transacción
+      const transaccion = {
+        tipo: "Pago",
+        concepto: `Pago de ${servicio}`,
+        referencia,
+        monto: valor,
+        fecha: new Date().toLocaleString("es-CO"),
+        timestamp: Date.now()
+      };
+
+      const transRef = ref(db, `transacciones/${usuario.clave}`);
+      await push(transRef, transaccion);
+
+      // Actualiza localStorage
+      usuario.saldo = nuevoSaldo;
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+
+      // Muestra resumen del pago
       resumenDiv.innerHTML = `
-        <h4>Resumen del Pago</h4>
+        <h4>Resumen del pago</h4>
         <p><strong>Servicio:</strong> ${servicio}</p>
         <p><strong>Referencia:</strong> ${referencia}</p>
         <p><strong>Valor pagado:</strong> $${valor.toLocaleString("es-CO")}</p>
-        <p><strong>Fecha:</strong> ${fechaCompleta}</p>
+        <p><strong>Fecha:</strong> ${transaccion.fecha}</p>
+        <p><strong>Saldo restante:</strong> $${nuevoSaldo.toLocaleString("es-CO")}</p>
       `;
       resumenDiv.style.display = "block";
       btnImprimir.style.display = "inline-block";
 
-      alert("Pago realizado exitosamente.");
-    } catch (err) {
-      console.error("Error al registrar el pago:", err);
-      alert("Hubo un error al registrar el pago.");
+      alert("Pago realizado con éxito.");
+
+    } catch (error) {
+      console.error("Error al realizar el pago:", error);
+      alert("Ocurrió un error al realizar el pago.");
     }
   });
 
-  // Imprime el resumen del pago
+  // Botón imprimir resumen
   btnImprimir.addEventListener("click", () => {
     window.print();
   });
